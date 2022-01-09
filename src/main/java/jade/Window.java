@@ -50,10 +50,9 @@ public class Window {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
-        // Create the window
-        System.out.println("Creating GLFW window");
+        // Create the window - note - must use VM flag -XstartOnFirstThread on MacOS else
+        // the glfwCreateWindow method call will hang
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
-        System.out.println("GLFW window created");
         if (glfwWindow == NULL) {
             throw new IllegalStateException("Failed to create the GLFW window");
         }
