@@ -2,12 +2,15 @@ package jade;
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
     private int width, height;
     private String title;
+    private long glfwWindow; // memory address of the glfwWindow, i.e. C-like
 
     private static Window window;
 
@@ -47,6 +50,25 @@ public class Window {
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
         // Create the window
+        glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
+        if (glfwWindow == NULL) {
+            throw new IllegalStateException("Failed to create the GLFW window");
+        }
+
+        // Make the OpenGL context current
+        glfwMakeContextCurrent(glfwWindow);
+        // Enable v-sync
+        glfwSwapInterval(1);
+
+        // Make the window visible
+        glfwShowWindow(glfwWindow);
+
+        // This line is critical for LWJGL's interoperation with GLFW's
+        // OpenGL context or any context that is managed externally.
+        // LWJGL detects the context that is current in the current thread,
+        // creates the GLCapabilities instance and makes he OpenGL
+        // bindings available for use.
+        GL.createCapabilities();
 
     }
 
