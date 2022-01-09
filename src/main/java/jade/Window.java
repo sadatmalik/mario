@@ -13,7 +13,7 @@ public class Window {
     private String title;
     private long glfwWindow; // memory address of the glfwWindow, i.e. C-like
 
-    private static Window window;
+    private static Window window = null;
 
     private Window() {
         this.width = 1920;
@@ -51,7 +51,9 @@ public class Window {
         glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
         // Create the window
+        System.out.println("Creating GLFW window");
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
+        System.out.println("GLFW window created");
         if (glfwWindow == NULL) {
             throw new IllegalStateException("Failed to create the GLFW window");
         }
@@ -70,7 +72,6 @@ public class Window {
         // creates the GLCapabilities instance and makes he OpenGL
         // bindings available for use.
         GL.createCapabilities();
-
     }
 
     public void loop() {
