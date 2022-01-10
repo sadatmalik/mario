@@ -8,6 +8,8 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+// See - https://www.lwjgl.org/guide
+// Useful reference for basic setup code in init() and loop()
 public class Window {
     private int width, height;
     private String title;
